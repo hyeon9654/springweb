@@ -1,7 +1,5 @@
 package example.day05;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +32,6 @@ public class TestEntity extends BaseTime{
     // + 제품 등록일 ++ 제품
 
 }
-
 /*
     - @Column( name="필드명" ) : 생략시 자동으로 멤버변수지정
     - @Column( nullable = true/false ) : not null

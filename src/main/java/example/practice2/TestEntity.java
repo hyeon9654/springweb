@@ -1,4 +1,4 @@
-package example.SpringPractice2;
+package example.practice2;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

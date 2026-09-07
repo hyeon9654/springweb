@@ -1,4 +1,4 @@
-package example.SpringPractice2;
+package example.practice2;
 
 import java.util.List;
 import java.util.Optional;
