@@ -1,5 +1,6 @@
 package example.day06;
 
+import example.practice5_test.model.dto.BoardDto.BoardDtoBuilder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -19,5 +20,20 @@ public class BoardEntity {
     @ManyToOne // 다수가 하나에게 참조
     @JoinColumn( name = "cno" )    // FK이름 지정, 주로 pk와 동일하게
     private CategoryEntity categoryEntity;
+
+    public Object getAuthor() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAuthor'");
+    }
+
+    public Integer getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
+
+    public static BoardDtoBuilder builder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
     
 }

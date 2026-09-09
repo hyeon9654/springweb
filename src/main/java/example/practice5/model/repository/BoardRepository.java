@@ -1,5 +1,8 @@
 package example.practice5.model.repository;
 
-public class BoardRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import example.practice5.model.entity.BoardEntity;
+
+public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
     
 }

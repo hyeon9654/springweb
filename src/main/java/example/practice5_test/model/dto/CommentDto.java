@@ -1,33 +1,32 @@
-package example.practice5.model.dto;
+package example.practice5_test.model.dto;
 
 import java.time.LocalDateTime;
 
-import example.day06.BoardEntity;
 import example.practice5.model.entity.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
- 	
-@NoArgsConstructor@AllArgsConstructor@data@Builder
+@NoArgsConstructor @AllArgsConstructor @Builder
+@Data @Getter @Setter 
 public class CommentDto {
     private Integer id;
     private String author;
     private String password;
     private String content;
-    // + BASETIME
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    // + FK 
     private Integer boardId;
-    // 
-    public CommentEntity toEntity( BoardEntity boardEntity ){
+
+    public CommentEntity toEntity(){
         return CommentEntity.builder()
             .content( this.content )
             .password( this.password )
             .author( this.author )
-            .boardEntity( boardEntity )
             .build();
     }
     //
@@ -39,7 +38,6 @@ public class CommentDto {
             .content( entity.getContent() )
             .createdAt( entity.getCreatedAt() )
             .updatedAt( entity.getUpdatedAt() )
-            .boardId( entity.getBoardEntity().getId() )
             .build();
     }
 }

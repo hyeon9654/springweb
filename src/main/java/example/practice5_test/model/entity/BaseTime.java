@@ -1,4 +1,4 @@
-package example.practice5.model.entity;
+package example.practice5_test.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 @Getter@NoArgsConstructor
 @MappedSuperclass@EntityListeners(AuditingEntityListener.class)
 public class BaseTime {
-
-    // 최초 등록 시간
-    @CreatedDate private LocalDateTime createdAt;
-
-    // 마지막 수정 시간
+    @CreatedDate  private  LocalDateTime createdAt;
     @LastModifiedDate private LocalDateTime updatedAt;
 }
