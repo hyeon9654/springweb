@@ -22,7 +22,7 @@ public class CommentEntity extends BaseTime {
     // 1. 댓글 번호 PK
     @Id 
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; 
 
     // 2. 작성자
     @Column(nullable = false)

@@ -4,18 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.day06.BoardEntity;
+import example.practice5_test.model.entity.BoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 
  	
 @NoArgsConstructor@AllArgsConstructor@Data@Builder
-public class BoardDto {
+public class BoardDto{
     private Integer id;
     private String author;
     private String password;
@@ -23,7 +20,7 @@ public class BoardDto {
     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
+
     @Builder.Default
     private List<CommentDto> comments = new ArrayList<>(); 
     public BoardEntity toEntity(){

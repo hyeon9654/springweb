@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Getter@NoArgsConstructor
 @MappedSuperclass@EntityListeners(AuditingEntityListener.class)
 public class BaseTime {
-    @CreatedDate  private  LocalDateTime createdAt;
+    @CreatedDate private LocalDateTime createdAt;
     @LastModifiedDate private LocalDateTime updatedAt;
 }

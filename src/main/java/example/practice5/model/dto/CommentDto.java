@@ -2,7 +2,7 @@ package example.practice5.model.dto;
 
 import java.time.LocalDateTime;
 
-import example.day06.BoardEntity;
+import example.practice5.model.entity.BoardEntity;
 import example.practice5.model.entity.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 
  	
-@NoArgsConstructor@AllArgsConstructor@data@Builder
+@NoArgsConstructor@AllArgsConstructor@Data@Builder
 public class CommentDto {
     private Integer id;
     private String author;

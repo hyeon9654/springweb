@@ -35,5 +35,20 @@ public class BoardEntity {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'builder'");
     }
+
+    public Object getPassword() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+    }
+
+    public Object getContent() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getContent'");
+    }
+
+    public Object getCreatedAt() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCreatedAt'");
+    }
     
 }

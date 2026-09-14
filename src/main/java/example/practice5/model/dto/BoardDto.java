@@ -31,17 +31,12 @@ public class BoardDto {
     }
     // Entity → DTO
     public static BoardDto from(BoardEntity entity) {
-        List<CommentDto> comments = new ArrayList<>();
-        entity.getComments().forEach(commentEntity -> {
-            comments.add(CommentDto.from(commentEntity));
-        });
         return BoardDto.builder()
                 .id(entity.getId())
                 .author(entity.getAuthor())
                 .content(entity.getContent())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-                .comments(comments)
                 .build();
     }
 }

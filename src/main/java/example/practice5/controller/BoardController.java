@@ -26,31 +26,22 @@ public class BoardController {
     @PostMapping("")
     public boolean 게시물등록(
             @RequestBody BoardDto boardDto) {
-
         return boardService.게시물등록(boardDto);
     }
-
 
     // 2. 게시글 전체조회
     @GetMapping("")
     public List<BoardDto> 게시물전체조회() {
-
         return boardService.게시물전체조회();
     }
-
 
     // 3. 게시글 삭제
     @DeleteMapping("")
     public boolean 게시물삭제(
             @RequestParam(name = "id")
             Integer id,
-
             @RequestParam(name = "password")
             String password) {
-
-        return boardService.게시물삭제(
-                id,
-                password
-        );
+        return boardService.게시물삭제(id,password);
     }
 }

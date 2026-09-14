@@ -16,7 +16,7 @@ public class BoardService {
     @Autowired private BoardRepository boardRepository;
 
     // 1. 
-    public boolean 게시물등록(BoardDto boardDto){
+    public boolean 게시물등록(example.practice5_test.model.dto.BoardDto boardDto){
         BoardEntity boardEntity = boardDto.toEntity();
         BoardEntity savedEntity = boardRepository.save(boardEntity);
         if (savedEntity.getId() >= 1) return true;

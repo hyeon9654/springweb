@@ -21,27 +21,28 @@ import lombok.Setter;
 @Entity@Table(name = "board")
 @NoArgsConstructor@AllArgsConstructor@Builder
 @Getter@Setter
-public class BoardEntity {
+public class BoardEntity extends BaseTime{
     // 1. 게시물 등록
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // 2. 작성자
-    @Column(nullable = false)
+    @Column(nullable = false , length = 50)
     private String author;
 
     // 3. 비밀번호
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String password;
 
     // 4. 내용
-    @Column(nullable = false)
+    @Column(nullable = false , columnDefinition = "TEXT")
     private String content;
 
     // 5. 게시글 1 : 댓글 N
     @OneToMany(
         mappedBy = "boardEntity", cascade = CascadeType.ALL
     )
+    @Builder.Default
     private List<CommentEntity> comments = new ArrayList<>();
 }
