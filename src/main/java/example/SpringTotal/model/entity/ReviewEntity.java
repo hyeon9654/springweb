@@ -1,4 +1,4 @@
-package example.Practice6.model.entity;
+package example.SpringTotal.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity @Table(name = "review" )
-@NoArgsConstructor @AllArgsConstructor @Builder 
-@Getter @Setter 
+@NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter
 public class ReviewEntity{
-    @Id 
+    @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer rno;
 
@@ -34,6 +34,6 @@ public class ReviewEntity{
     @ManyToOne
     @JoinColumn( name = "bno")
     private ProductEntity productEntity;
-    
+
 
 }
