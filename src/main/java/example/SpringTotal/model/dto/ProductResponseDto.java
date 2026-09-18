@@ -1,35 +1,33 @@
 package example.SpringTotal.model.dto;
 
-import example.SpringTotal.model.entity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import example.SpringTotal.model.entity.ProductEntity;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor 
-@ToString @Builder 
-public class ProductDto {
+@Data
+@NoArgsConstructor @AllArgsConstructor @Builder
+public class ProductResponseDto {
     private Integer bno;
-
     private String name;
     private Integer price;
-
     private Integer cno;
+    private String categoryName;
 
-    public ProductEntity dtoToEntity(){
+    public ProductEntity entityToDto(){
         return ProductEntity.builder()
                 .name(this.name)
-                .price(this.price).build();
+                .price(this.price)
+                .build();
     }
 
-    public static ProductDto entityToDto(ProductEntity productEntity){
-        return ProductDto.builder()
+    public static ProductResponseDto dtoToEntity(ProductEntity productEntity){
+        return ProductResponseDto.builder()
                 .bno(productEntity.getBno())
                 .name(productEntity.getName())
                 .price(productEntity.getPrice())
                 .cno(productEntity.getCategoryEntity().getCno())
-                .build();
+                .categoryName(productEntity.getCategoryEntity().getName()).build();
     }
 }

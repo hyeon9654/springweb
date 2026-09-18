@@ -1,12 +1,12 @@
 package example.SpringTotal.model.dto;
 
-import example.SpringTotal.model.entity.ReviewEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import example.SpringTotal.model.entity.ReviewEntity;
 
-@NoArgsConstructor @AllArgsConstructor @Data @Builder 
+@NoArgsConstructor @AllArgsConstructor @Data @Builder
 public class ReviewDto {
     private Integer rno;
     private String reviewer;
@@ -16,17 +16,19 @@ public class ReviewDto {
 
     public ReviewEntity dtoToEntity(){
         return ReviewEntity.builder()
-        .reviewer(this.reviewer)
-        .content(this.content)
-        .rating(this.rating)
-        .build();
+                .reviewer(this.reviewer)
+                .content(this.content)
+                .rating(this.rating)
+                .build();
     }
 
     public static ReviewDto entityToDto( ReviewEntity entity ){
         return ReviewDto.builder()
-        .reviewer(entity.getReviewer())
-        .content(entity.getContent())
-        .rating(entity.getRating())
-        .build();
+                .rno(entity.getRno())
+                .bno(entity.getProductEntity().getBno())
+                .reviewer(entity.getReviewer())
+                .content(entity.getContent())
+                .rating(entity.getRating())
+                .build();
     }
 }
