@@ -1,4 +1,4 @@
-package example.practice4.model.entity;
+package example.Practice.practice4.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity@Table( name = "course" )
-@NoArgsConstructor@AllArgsConstructor @Builder @Data 
+@NoArgsConstructor@AllArgsConstructor @Builder @Data
 public class CourseEntity extends BaseTime {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private  Integer courseId;
+    private Integer courseId;
+
     @Column
     private String courseName;
-    
+
     // @OneToMany( mappedBy = "매핑할멤버변수명" )
     @OneToMany( mappedBy = "courseEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     @ToString.Exclude   // 순환참조방지

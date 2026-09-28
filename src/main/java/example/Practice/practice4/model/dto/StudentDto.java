@@ -1,8 +1,8 @@
-package example.practice4.dto;
+package example.Practice.practice4.model.dto;
 
 import java.time.LocalDateTime;
 
-import example.practice4.model.entity.StudentEntity;
+import example.Practice.practice4.model.entity.StudentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,19 +14,21 @@ public class StudentDto {
     private String studentName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
     // + toEntity : 학생등록 용도
     public StudentEntity toEntity( ){
         return StudentEntity.builder()
-                .StudentName(this.studentName)
+                .studentName(this.studentName)
                 .build();
     }
+
     // + from : 출력용도
-    public static  StudentDto from( StudentEntity entity ){
+    public static StudentDto from( StudentEntity entity ){
         return StudentDto.builder()
                 .studentId( entity.getStudentId() )
                 .studentName( entity.getStudentName() )
                 .createdAt( entity.getCreatedAt() )
-                .upDatedAt(entity.getUpdatedAt() )
+                .updatedAt( entity.getUpdatedAt() )
                 .build();
     }
 }
