@@ -46,3 +46,12 @@ dependencies { // start.spring.io
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Practice5만 실행: .\gradlew.bat bootRun -Ppractice5
+if (project.hasProperty('practice5')) {
+	layout.buildDirectory = layout.projectDirectory.dir('build/practice5')
+	sourceSets.main.java.setIncludes(['example/Practice/practice5/**'])
+	tasks.named('bootRun') {
+		mainClass = 'example.Practice.practice5.AppStart'
+	}
+}
