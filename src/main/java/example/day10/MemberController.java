@@ -3,9 +3,15 @@ package example.day10;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Duration;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,41 +32,55 @@ public class MemberController {
         return memberService.signup(memberDto);
     }
 
-    // [2] 로그인 + 세션(인증 성공시 성공한 회원정보 저장/ 왜? 로그인 성공한 회원이 글쓰기/제품등록 등등 FK용도)
+    // [2] 로그인 + 쿠키변경(회원 식별(번호) 쿠키에 담아 클라이언트에 전송)
     @PostMapping("/login")
-    public MemberDto login(@RequestBody MemberDto memberDto, HttpSession session ){
-        // 1. 서비스에게 인증 확인한다.
+    public MemberDto login( @RequestBody MemberDto memberDto , HttpServletResponse response ){
+        // 1. 서비스에게 인증/로그인 확인(기존유지)
         MemberDto result = memberService.login(memberDto);
-        if ( result == null ) return null; // 로그인실패
-        // 2. 인증 성공이면 세션에 인증한 회원정보 담아주기.
-        // - 매개변수에 HttpSession 객체 정의
-        // - 'login_member' key(이름)로 memberDto value(로그인 성공한) 정보 저장
-        session.setAttribute("login_member", result);   // Object 업캐스팅
+        if (result==null) return null; // 로그인 실패시
+        // 2. 로그인 성공 시 쿠키 생성/발급
+        // 쿠키는 세션과 다르게 클라이언트내 저장되므로 회원번호만 저장(민감한정보는 쿠키에 넣지말자)
+        // ResponseCookie cookie = ResponseCookie.from("쿠키명", "쿠키값").build();
+        // *참고 : 정수 -> 문자 타입변환 방법1) 정수+"" , 방법2) String.valueOf(정수), *쿠키값은 String 타입이다.*
+        ResponseCookie cookie = ResponseCookie.from("login_member", result.getMno()+"")
+                                .path("/") // 쿠키 사용할 경로, "/" 도메인내 전체
+                                // Duration.ofXXX(수) 
+                                .maxAge(Duration.ofDays(1)) // 쿠키의 유효기간, 1일
+                                .httpOnly(true) // JS이용한 탈취 방지, XSS공격
+                                .secure(false)  // HTTPS 에서만 사용, 개발단계 : FALSE , 배포단게 : TRUE
+                                .sameSite("Lax")    // CSRF 공격방어
+                                .build();        // 쿠키생성 끝
+        // 3. 응답 헤더에 쿠키 등록, response.setHeader()
+        response.setHeader( HttpHeaders.SET_COOKIE, cookie.toString());
         return result;
-    }
+        }
 
-    // [3] 내정보 조회 + 세션( 이미 로그인된 회원이 내정보 요청 )
+    // [3] 내정보 조회 + 쿠키 //세션( 이미 로그인된 회원이 내정보 요청 )
     @GetMapping("/me")
-    public MemberDto getMyInfo( HttpSession session ){
-        // * 사용자에게 추가로 입력받을 값은 없다.
-        // 1) 세션에서 특정한(login_member) 정보 꺼내기
-        Object obj = session.getAttribute("login_member");
-        if(obj == null) return null; // 세션 정보가 비어있으면 실패
-        // 2) 존재하면 Object 다운캐스팅 , obj -> dto
-        MemberDto memberDto = (MemberDto)obj;
-        // 3) 서비스에게 회원번호 전달하여 추가 정보 요청하여 반환한다.
-        return memberService.getMyInfo(memberDto.getMno());
-    }
-
+    public MemberDto getMyInfo(
+        // @CookieValue(value="쿠키명")){// 요청한 브라우저의 쿠키 가져오기}
+        @CookieValue( value="login_member", required = false )String loginMno){
+        // 1. 만약에 loginMno가 없다면 비로그인
+        if (loginMno == null) return null;
+        // 2. 로그인 중이면 서비스에게 회원정보 요청
+        // 참고: 문자->정수 변환 방법1) 래퍼클래스명.paese타입( 문자 )
+        return memberService.getMyInfo(Long.parseLong(loginMno));
+        } 
     // [4] 로그아웃 + 세션 ( 초기화 )
     @PostMapping ("/logout")
-    public boolean logout( HttpSession httpSession ){
-        //* 사용자에게 추가로 입력받을 값은 없다.
-        httpSession.invalidate(); // 선택1] 세션 내 모든 정보 초기화
-        // httpSession.removeAttribute("login_member"); // 선택2] 세션 내 특정 정보 삭제
+    public boolean logout( HttpServletResponse response ){
+        // 1. 삭제할 쿠키명과 동일한 이름으로 maxAge(0) 하여 재발급
+        ResponseCookie cookie = ResponseCookie.from("login_member","")
+                                .path("/")      // 모든곳에서 로그아웃 가능하도록, 전체
+                                .maxAge(Duration.ofDays(1)) // 바로 삭제
+                                .httpOnly(true) 
+                                .secure(false) 
+                                .build();
+        // 2.응답객체내 헤더에 쿠키 포함
+        response.setHeader( HttpHeaders.SET_COOKIE, cookie.toString() );
         return true;
     }
-    
+    }
 /*
     @GetMapping("")
     public String test( HttpServletRequest request ){
